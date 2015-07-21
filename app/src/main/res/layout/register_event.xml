@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relativeLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fillViewport="true"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="15dp" >
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <EditText android:id="@+id/inputPassId"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dip"
+                android:layout_marginBottom="15dip"
+                android:hint="Pass Card Id"
+                android:singleLine="true"/>
+            <Button android:id="@+id/btnGo"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Go"/>
+
+            <TextView android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/studentNameText"
+                android:paddingLeft="10dip"
+                android:paddingRight="10dip"
+                android:paddingTop="10dip"
+                android:textSize="17dip"
+                android:visibility="gone"
+                android:textStyle="bold"/>
+            <TextView android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/studentEmailText"
+                android:paddingLeft="10dip"
+                android:paddingRight="10dip"
+                android:paddingTop="10dip"
+                android:textSize="17dip"
+                android:visibility="gone"
+                android:textStyle="bold"/>
+            <TextView android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/studentContactText"
+                android:paddingLeft="10dip"
+                android:paddingRight="10dip"
+                android:paddingTop="10dip"
+                android:textSize="17dip"
+                android:visibility="gone"
+                android:textStyle="bold"/>
+            <TextView android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/studentCollegeText"
+                android:paddingLeft="10dip"
+                android:paddingRight="10dip"
+                android:paddingTop="10dip"
+                android:textSize="17dip"
+                android:visibility="gone"
+                android:textStyle="bold"/>
+            <ListView
+                android:id="@android:id/list"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"/>
+            <Spinner
+                android:id="@+id/eventDropdown"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"/>
+            <Button android:id="@+id/btnRegisterForEventSubmit"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Submit"
+                android:visibility="gone"/>
+            <Button android:id="@+id/btnBackFromRegisterEvent"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Back"/>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

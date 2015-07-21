@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="praxis.vesit.com.allentrypass" >
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme"
+        android:configChanges="keyboardHidden|orientation">
+        <activity
+            android:name=".MainScreenActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!-- Create Student Pass Activity -->
+        <activity
+            android:name=".CreateStudentPassActivity"
+            android:label="Create Student Pass" >
+        </activity>
+        <!-- Add Product Activity -->
+        <activity
+            android:name=".RegisterForEventActivity"
+            android:label="Register For Event" >
+        </activity>
+        <!-- Add Product Activity -->
+        <activity
+            android:name=".AddEventActivity"
+            android:label="Add Event" >
+        </activity>
+    </application>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+</manifest>

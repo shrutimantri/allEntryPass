@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relativeLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fillViewport="true"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="15dp" >
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <!-- Name Label -->
+            <TextView android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Event Name"
+                android:paddingLeft="10dip"
+                android:paddingRight="10dip"
+                android:paddingTop="10dip"
+                android:textSize="17dip"/>
+
+            <!-- Input Name -->
+            <EditText android:id="@+id/inputEventName"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dip"
+                android:layout_marginBottom="15dip"
+                android:singleLine="true"/>
+
+            <Button android:id="@+id/btnCreateEvent"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Create Event"/>
+
+            <Button android:id="@+id/btnBackFromAddEvent"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Back"/>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
