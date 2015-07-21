@@ -148,6 +148,7 @@ public class RegisterForEventActivity extends ListActivity {
                 public void run() {
                     // Check for success tag
                     int success;
+                    eventsName = new ArrayList<String>();
                     try {
                         // Building Parameters
                         List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -180,16 +181,15 @@ public class RegisterForEventActivity extends ListActivity {
                             studentEmailText.setVisibility(TextView.VISIBLE);
                             studentContactText.setVisibility(TextView.VISIBLE);
                             studentCollegeText.setVisibility(TextView.VISIBLE);
-                            if(student.get("events")!=null){
-                                eventsName = new ArrayList<String>();
+                            if(student.has("events")){
                                 JSONArray spinnerArray =  student.getJSONArray("events");
                                 for(int i=0; i<spinnerArray.length(); i++) {
                                     eventsName.add(spinnerArray.getString(i));
                                 }
-                                setListAdapter(new ArrayAdapter<String>(getBaseContext(),
-                                        R.layout.list_event, R.id.eventNameInList, eventsName));
-                            }
 
+                            }
+                            setListAdapter(new ArrayAdapter<String>(getBaseContext(),
+                                    R.layout.list_event, R.id.eventNameInList, eventsName));
                         }else{
                             if(json.get("message").equals("No student found")){
                                 Intent i = new Intent(getApplicationContext(), RegisterForEventActivity.class);
