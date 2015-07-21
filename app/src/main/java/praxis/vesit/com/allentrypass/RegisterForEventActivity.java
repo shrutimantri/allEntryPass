@@ -47,6 +47,7 @@ public class RegisterForEventActivity extends ListActivity {
     Button btnSubmit;
     Spinner eventDropdown;
     List<String> eventsName;
+    List<String> allEventsName;
     // url to create new product
     private static String url_get_student = "http://" + AppConfig.HOST + ":" + AppConfig.PORT + "/allEntryPass/get_student_details.php";
     private static String url_register_event = "http://" + AppConfig.HOST + ":" + AppConfig.PORT + "/allEntryPass/register_event.php";
@@ -149,6 +150,7 @@ public class RegisterForEventActivity extends ListActivity {
                     // Check for success tag
                     int success;
                     eventsName = new ArrayList<String>();
+                    allEventsName = new ArrayList<String>();
                     try {
                         // Building Parameters
                         List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -182,16 +184,37 @@ public class RegisterForEventActivity extends ListActivity {
                             studentContactText.setVisibility(TextView.VISIBLE);
                             studentCollegeText.setVisibility(TextView.VISIBLE);
                             if(student.has("events")){
-                                JSONArray spinnerArray =  student.getJSONArray("events");
-                                for(int i=0; i<spinnerArray.length(); i++) {
-                                    eventsName.add(spinnerArray.getString(i));
+                                JSONArray listOfEventsParticipated =  student.getJSONArray("events");
+                                for(int i=0; i<listOfEventsParticipated.length(); i++) {
+                                    eventsName.add(listOfEventsParticipated.getString(i));
+                                }
+
+                            }
+                            if(student.has("allEvents")){
+                                JSONArray listOfAllEvents =  student.getJSONArray("allEvents");
+                                for(int i=0; i<listOfAllEvents.length(); i++) {
+                                    allEventsName.add(listOfAllEvents.getString(i));
                                 }
 
                             }
                             setListAdapter(new ArrayAdapter<String>(getBaseContext(),
                                     R.layout.list_event, R.id.eventNameInList, eventsName));
+                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getBaseContext(),
+                                    android.R.layout.simple_spinner_item, allEventsName);
+                            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            Spinner sItems = (Spinner) findViewById(R.id.eventDropdown);
+                            sItems.setAdapter(adapter);
+                            sItems.setVisibility(View.VISIBLE);
+                            btnSubmit.setVisibility(View.VISIBLE);
                         }else{
                             if(json.get("message").equals("No student found")){
+                                studentNameText.setVisibility(TextView.INVISIBLE);
+                                studentEmailText.setVisibility(TextView.INVISIBLE);
+                                studentContactText.setVisibility(TextView.INVISIBLE);
+                                studentCollegeText.setVisibility(TextView.INVISIBLE);
+                                btnSubmit.setVisibility(View.INVISIBLE);
+                                eventDropdown.setVisibility(View.INVISIBLE);
+                                eventsName.clear();
                                 Intent i = new Intent(getApplicationContext(), RegisterForEventActivity.class);
                                 i.putExtra("message", "This pass is not registered!");
                                 startActivity(i);
