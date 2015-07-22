@@ -17,8 +17,10 @@ import android.view.ViewParent;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -125,8 +127,35 @@ public class RegisterForEventActivity extends ListActivity {
             }
         });
 
+        ListView listView = (ListView)findViewById(android.R.id.list);
+        setListViewHeightBasedOnChildren(listView);
+        /*ViewGroup.LayoutParams listViewParams = (ViewGroup.LayoutParams)listView.getLayoutParams();
+        listViewParams.height = 100;
+        listView.requestLayout();*/
+
     }
 
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null)
+            return;
+
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+        int totalHeight = 0;
+        View view = null;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            view = listAdapter.getView(i, view, listView);
+            if (i == 0)
+                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, LinearLayout.LayoutParams.WRAP_CONTENT));
+
+            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            totalHeight += view.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
+        listView.requestLayout();
+    }
     /**
      * Background Async Task to Create new product
      * */
@@ -210,6 +239,12 @@ public class RegisterForEventActivity extends ListActivity {
                             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                             Spinner sItems = (Spinner) findViewById(R.id.eventDropdown);
                             sItems.setAdapter(adapter);
+
+                            if(eventsName.size()>0){
+                                ListView listView = (ListView) findViewById(android.R.id.list);
+                                setListViewHeightBasedOnChildren(listView);
+                            }
+
                             sItems.setVisibility(View.VISIBLE);
                             btnSubmit.setVisibility(View.VISIBLE);
                         }else{
