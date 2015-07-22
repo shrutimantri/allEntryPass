@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/relativeLayout1"
+    android:id="@+id/relativeLayout3"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -10,7 +10,7 @@
         android:fillViewport="true"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:padding="15dp" >
+        android:padding="15dp">
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:orientation="vertical"
             android:layout_width="match_parent"

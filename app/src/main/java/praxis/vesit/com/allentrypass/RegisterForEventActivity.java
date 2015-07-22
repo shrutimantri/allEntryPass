@@ -10,11 +10,15 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -54,6 +58,7 @@ public class RegisterForEventActivity extends ListActivity {
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -119,6 +124,7 @@ public class RegisterForEventActivity extends ListActivity {
                 new RegisterPassForEvent().execute();
             }
         });
+
     }
 
     /**
@@ -278,41 +284,22 @@ public class RegisterForEventActivity extends ListActivity {
                         // Building Parameters
                         List<NameValuePair> params = new ArrayList<NameValuePair>();
                         params.add(new BasicNameValuePair("passId", inputPassId.getText().toString()));
+                        params.add(new BasicNameValuePair("eventName", eventDropdown.getItemAtPosition(eventDropdown.getSelectedItemPosition()).toString()));
 
                         // getting product details by making HTTP request
                         // Note that product details url will use GET request
                         JSONObject json = jsonParser.makeHttpRequest(
-                                url_get_student, "GET", params);
-
-                        // check your log for json response
-                        Log.d("Single Student Details", json.toString());
+                                url_register_event, "POST", params);
 
                         // json success tag
                         success = json.getInt(TAG_SUCCESS);
                         if (success == 1) {
-                            // successfully received product details
-                            JSONArray studentObj = json
-                                    .getJSONArray("student"); // JSON Array
-
-                            // get first product object from JSON Array
-                            JSONObject student = studentObj.getJSONObject(0);
-
-                            // display product data in EditText
-                            studentNameText.setText(student.getString("name"));
-                            studentEmailText.setText(student.getString("email"));
-                            studentContactText.setText(student.getString("phone"));
-                            studentCollegeText.setText(student.getString("college"));
-                            studentNameText.setVisibility(TextView.VISIBLE);
-                            studentEmailText.setVisibility(TextView.VISIBLE);
-                            studentContactText.setVisibility(TextView.VISIBLE);
-                            studentCollegeText.setVisibility(TextView.VISIBLE);
+                            pDialog.dismiss();
+                            new GetStudentDetails().execute();
 
                         }else{
-                            if(json.get("message").equals("No student found")){
-                                Intent i = new Intent(getApplicationContext(), RegisterForEventActivity.class);
-                                i.putExtra("message", "This pass is not registered!");
-                                startActivity(i);
-                            }
+                            pDialog.dismiss();
+                            new GetStudentDetails().execute();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
