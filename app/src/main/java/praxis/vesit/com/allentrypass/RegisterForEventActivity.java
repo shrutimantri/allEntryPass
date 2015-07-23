@@ -135,6 +135,12 @@ public class RegisterForEventActivity extends ListActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(getApplicationContext(), MainScreenActivity.class);
+        startActivity(i);
+    }
+
     public static void setListViewHeightBasedOnChildren(ListView listView) {
         ListAdapter listAdapter = listView.getAdapter();
         if (listAdapter == null)
@@ -197,6 +203,12 @@ public class RegisterForEventActivity extends ListActivity {
                                 url_get_student, "GET", params);
 
                         // check your log for json response
+                        if(json==null){
+                            Intent i = new Intent(getApplicationContext(), RegisterForEventActivity.class);
+                            i.putExtra("message", "Please enter required field(s)");
+                            startActivity(i);
+                            return;
+                        }
                         Log.d("Single Student Details", json.toString());
 
                         // json success tag
@@ -244,22 +256,23 @@ public class RegisterForEventActivity extends ListActivity {
                                 ListView listView = (ListView) findViewById(android.R.id.list);
                                 setListViewHeightBasedOnChildren(listView);
                             }
-
-                            sItems.setVisibility(View.VISIBLE);
+                            if(allEventsName.size()>0) {
+                                sItems.setVisibility(View.VISIBLE);
+                            }else{
+                                sItems.setVisibility(View.INVISIBLE);
+                            }
                             btnSubmit.setVisibility(View.VISIBLE);
                         }else{
-                            if(json.get("message").equals("No student found")){
-                                studentNameText.setVisibility(TextView.INVISIBLE);
-                                studentEmailText.setVisibility(TextView.INVISIBLE);
-                                studentContactText.setVisibility(TextView.INVISIBLE);
-                                studentCollegeText.setVisibility(TextView.INVISIBLE);
-                                btnSubmit.setVisibility(View.INVISIBLE);
-                                eventDropdown.setVisibility(View.INVISIBLE);
-                                eventsName.clear();
-                                Intent i = new Intent(getApplicationContext(), RegisterForEventActivity.class);
-                                i.putExtra("message", "This pass is not registered!");
-                                startActivity(i);
-                            }
+                            studentNameText.setVisibility(TextView.INVISIBLE);
+                            studentEmailText.setVisibility(TextView.INVISIBLE);
+                            studentContactText.setVisibility(TextView.INVISIBLE);
+                            studentCollegeText.setVisibility(TextView.INVISIBLE);
+                            btnSubmit.setVisibility(View.INVISIBLE);
+                            eventDropdown.setVisibility(View.INVISIBLE);
+                            eventsName.clear();
+                            Intent i = new Intent(getApplicationContext(), RegisterForEventActivity.class);
+                            i.putExtra("message", json.getString("message"));
+                            startActivity(i);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

@@ -85,6 +85,12 @@ public class AddEventActivity extends Activity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(getApplicationContext(), MainScreenActivity.class);
+        startActivity(i);
+    }
+
     /**
      * Background Async Task to Create new product
      * */
@@ -124,6 +130,12 @@ public class AddEventActivity extends Activity {
 
             // check for success tag
             try {
+                if(json==null){
+                    Intent i = new Intent(getApplicationContext(), AddEventActivity.class);
+                    i.putExtra("message", "Please enter required field(s)");
+                    startActivity(i);
+                    return null;
+                }
                 int success = json.getInt(TAG_SUCCESS);
 
                 if (success == 1) {
@@ -137,7 +149,7 @@ public class AddEventActivity extends Activity {
                     finish();
                 } else {
                     Intent i = new Intent(getApplicationContext(), AddEventActivity.class);
-                    i.putExtra("message", "This event is already registered!");
+                    i.putExtra("message", json.getString("message"));
                     i.putExtra("eventName", eventName);
                     startActivity(i);
                 }

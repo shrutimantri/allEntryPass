@@ -32,6 +32,11 @@
             android:name=".AddEventActivity"
             android:label="Add Event" >
         </activity>
+
+        <activity
+            android:name=".SettingActivity"
+            android:label="Set IP" >
+        </activity>
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />

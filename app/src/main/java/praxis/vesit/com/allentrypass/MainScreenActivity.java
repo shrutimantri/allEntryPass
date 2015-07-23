@@ -1,10 +1,14 @@
 package praxis.vesit.com.allentrypass;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -67,8 +71,9 @@ public class MainScreenActivity extends Activity {
             @Override
             public void onClick(View view) {
                 // Launching All products Activity
-                Intent i = new Intent(getApplicationContext(), CreateStudentPassActivity.class);
-                startActivity(i);
+                /*Intent i = new Intent(getApplicationContext(), CreateStudentPassActivity.class);
+                startActivity(i);*/
+                new CreateStudentPass(MainScreenActivity.this).execute();
 
             }
         });
@@ -79,8 +84,9 @@ public class MainScreenActivity extends Activity {
             @Override
             public void onClick(View view) {
                 // Launching create new product activity
-                Intent i = new Intent(getApplicationContext(), AddEventActivity.class);
-                startActivity(i);
+                /*Intent i = new Intent(getApplicationContext(), AddEventActivity.class);
+                startActivity(i);*/
+                new AddEvent(MainScreenActivity.this).execute();
 
             }
         });
@@ -90,10 +96,93 @@ public class MainScreenActivity extends Activity {
             @Override
             public void onClick(View view) {
                 // Launching All products Activity
-                Intent i = new Intent(getApplicationContext(), RegisterForEventActivity.class);
-                startActivity(i);
-
+                /*Intent i = new Intent(getApplicationContext(), RegisterForEventActivity.class);
+                startActivity(i);*/
+                new RegisterForEvent(MainScreenActivity.this).execute();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.settings, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.setIP:
+                Intent i = new Intent(getApplicationContext(), SettingActivity.class);
+                startActivity(i);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    class CreateStudentPass extends AsyncTask<Void, Void, Boolean> {
+        private Activity activity;
+
+        public CreateStudentPass(Activity activity) {
+            this.activity = activity;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... arg0) {
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            activity.startActivity(new Intent(activity, CreateStudentPassActivity.class));
+        }
+    }
+
+    class AddEvent extends AsyncTask<Void, Void, Boolean> {
+        private Activity activity;
+
+        public AddEvent(Activity activity) {
+            this.activity = activity;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... arg0) {
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            activity.startActivity(new Intent(activity, AddEventActivity.class));
+        }
+    }
+
+    class RegisterForEvent extends AsyncTask<Void, Void, Boolean> {
+        private Activity activity;
+        private ProgressDialog pd;
+
+        public RegisterForEvent(Activity activity) {
+            this.activity = activity;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... arg0) {
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            activity.startActivity(new Intent(activity, RegisterForEventActivity.class));
+        }
     }
 }

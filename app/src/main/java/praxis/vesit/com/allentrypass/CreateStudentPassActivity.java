@@ -94,7 +94,12 @@ public class CreateStudentPassActivity extends Activity{
         ((EditText) findViewById(R.id.inputStudentEmail)).setText(getIntent().getStringExtra("email"));
         ((EditText) findViewById(R.id.inputStudentContact)).setText(getIntent().getStringExtra("phone"));
         ((EditText) findViewById(R.id.inputStudentCollege)).setText(getIntent().getStringExtra("college"));
+    }
 
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(getApplicationContext(), MainScreenActivity.class);
+        startActivity(i);
     }
 
     /**
@@ -140,6 +145,17 @@ public class CreateStudentPassActivity extends Activity{
                     "POST", params);
 
             // check log cat fro response
+            if(json==null){
+                Intent i = new Intent(getApplicationContext(), CreateStudentPassActivity.class);
+                i.putExtra("message", "Please enter required field(s)");
+                i.putExtra("passNumber", passId);
+                i.putExtra("name", name);
+                i.putExtra("phone", phone);
+                i.putExtra("email", email);
+                i.putExtra("college", college);
+                startActivity(i);
+                return null;
+            }
             Log.d("Create Response", json.toString());
 
             // check for success tag
@@ -157,7 +173,7 @@ public class CreateStudentPassActivity extends Activity{
                     finish();
                 } else {
                     Intent i = new Intent(getApplicationContext(), CreateStudentPassActivity.class);
-                    i.putExtra("message", "This pass is already registered!");
+                    i.putExtra("message", json.getString("message"));
                     i.putExtra("passNumber", passId);
                     i.putExtra("name", name);
                     i.putExtra("phone", phone);

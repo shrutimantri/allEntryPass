@@ -1,8 +1,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:gravity="center_horizontal">
+    android:gravity="center_horizontal"
+    tools:context=".MyActivity">
 
     <!--  Sample Dashboard screen with Two buttons -->
     <!--  Button to view all products screen -->
@@ -25,4 +27,5 @@
         android:layout_height="wrap_content"
         android:text="Add Event"
         android:layout_marginTop="12dip"/>
+
 </LinearLayout>
